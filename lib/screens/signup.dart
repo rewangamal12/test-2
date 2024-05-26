@@ -20,7 +20,7 @@ class SignupPage extends StatefulWidget {
 
 class _SignupPageState extends State<SignupPage> {
   final auth = FirebaseAuth.instance;
-  
+
   late String email;
 
   late String password;
@@ -28,287 +28,288 @@ class _SignupPageState extends State<SignupPage> {
 
   @override
   Widget build(BuildContext context) {
-    return (Scaffold(
-      
-        //logo
-        
-          backgroundColor: Colors.transparent,
-          body: Stack(
-            children: [
-        backgroundimage(),
-        SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
-                height: 150,
-                child: Center(
-                  child: Image(image: AssetImage('assets/logo.png')),
+    return Scaffold(
+      //logo
+
+      backgroundColor: Colors.transparent,
+      body: Stack(
+        children: [
+          backgroundimage(),
+          SingleChildScrollView(
+            child: Column(
+              children: [
+                Container(
+                  height: 150,
+                  child: Center(
+                    child: Image(image: AssetImage('assets/logo.png')),
+                  ),
                 ),
-              ),
-              // text sign up
-              SizedBox(
-                height: 2,
-              ),
-              Text(
-                'SIGN UP',
-                style: GoogleFonts.poppins(
-                    fontSize: 40,
-                    fontWeight: FontWeight.bold,
-                    color: (Color.fromARGB(255, 5, 77, 59))),
-              ),
+                // text sign up
+                SizedBox(
+                  height: 2,
+                ),
+                Text(
+                  'SIGN UP',
+                  style: GoogleFonts.poppins(
+                      fontSize: 40,
+                      fontWeight: FontWeight.bold,
+                      color: (Color.fromARGB(255, 5, 77, 59))),
+                ),
 
-              SizedBox(
-                height: 15,
-              ),
-              //form
-              Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 10),
-                  child: Column(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 240, 237, 255),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: TextField(
-                          onChanged: (value) {
-                            setState(() {
-                              this.email = value;
-                            });
-                          },
-                          decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 18),
-                              border: InputBorder.none,
-                              hintText: 'PhoneNumber Or Email',
-                              prefixIcon: Icon(
-                                Icons.person_outline,
-                                size: 33,
-                              )),
-                          keyboardType: TextInputType.emailAddress,
-                          textInputAction: TextInputAction.next,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 240, 237, 255),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: TextField(
-                          onChanged: (value) {
-                            setState(() {
-                              this.password = value;
-                            });
-                          },
-                          decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 18),
-                              border: InputBorder.none,
-                              hintText: 'Password',
-                              prefixIcon: Icon(
-                                Icons.lock_outline,
-                                size: 33,
-                              )),
-                          obscureText: true,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 10),
-                        decoration: BoxDecoration(
-                          color: Color.fromARGB(255, 240, 237, 255),
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: TextField(
-                          onChanged: (value) {
-                            setState(() {
-                              this.password = value;
-                            });
-                          },
-                          decoration: InputDecoration(
-                              contentPadding:
-                                  const EdgeInsets.symmetric(vertical: 18),
-                              border: InputBorder.none,
-                              hintText: 'Re-enter Password',
-                              prefixIcon: Icon(
-                                Icons.lock_outline,
-                                size: 33,
-                              )),
-                          obscureText: true,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      Column(
-                        children: [
-                          Container(
-                              height: 50,
-                              width: 110,
-                              decoration: BoxDecoration(
-                                  color: Color.fromARGB(255, 43, 165, 120),
-                                  borderRadius: BorderRadius.circular(16)),
-                              child: TextButton(
-                                  onPressed: () async {
-                                    try {
-                                       await auth
-                                          .createUserWithEmailAndPassword(
-                                              email: this.email,
-                                              password: this.password);
-                                    } catch (e) {
-                                      print(e);
-                                    }
-                                    Navigator.push(context, MaterialPageRoute(
-                                      builder: (context) {
-                                        return ProfilePicure();
-                                      },
-                                    ));
-                                  },
-                                  child: Text(
-                                    'Sign up',
-                                    style: TextStyle(
-                                        color: Colors.white, fontSize: 17),
-                                  ))),
-
-                          //button
-
-                          SizedBox(
-                            height: 10,
+                SizedBox(
+                  height: 15,
+                ),
+                //form
+                Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Column(
+                      children: [
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 240, 237, 255),
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text(
-                                'Sign up',
-                                style: TextStyle(
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                              ),
-                              SizedBox(
-                                width: 2,
-                              ),
-                              Text(
-                                'With Others',
-                                style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.normal,
-                                    color: Colors.black),
-                              ),
-                            ],
+                          child: TextField(
+                            onChanged: (value) {
+                              setState(() {
+                                this.email = value;
+                              });
+                            },
+                            decoration: InputDecoration(
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 18),
+                                border: InputBorder.none,
+                                hintText: 'PhoneNumber Or Email',
+                                prefixIcon: Icon(
+                                  Icons.person_outline,
+                                  size: 33,
+                                )),
+                            keyboardType: TextInputType.emailAddress,
+                            textInputAction: TextInputAction.next,
                           ),
-                          SizedBox(
-                            height: 20,
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 240, 237, 255),
+                            borderRadius: BorderRadius.circular(20),
                           ),
-                          //sign in with google
+                          child: TextField(
+                            onChanged: (value) {
+                              setState(() {
+                                this.password = value;
+                              });
+                            },
+                            decoration: InputDecoration(
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 18),
+                                border: InputBorder.none,
+                                hintText: 'Password',
+                                prefixIcon: Icon(
+                                  Icons.lock_outline,
+                                  size: 33,
+                                )),
+                            obscureText: true,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          decoration: BoxDecoration(
+                            color: Color.fromARGB(255, 240, 237, 255),
+                            borderRadius: BorderRadius.circular(20),
+                          ),
+                          child: TextField(
+                            onChanged: (value) {
+                              setState(() {
+                                this.password = value;
+                              });
+                            },
+                            decoration: InputDecoration(
+                                contentPadding:
+                                    const EdgeInsets.symmetric(vertical: 18),
+                                border: InputBorder.none,
+                                hintText: 'Re-enter Password',
+                                prefixIcon: Icon(
+                                  Icons.lock_outline,
+                                  size: 33,
+                                )),
+                            obscureText: true,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                                height: 50,
+                                width: 110,
+                                decoration: BoxDecoration(
+                                    color: Color.fromARGB(255, 43, 165, 120),
+                                    borderRadius: BorderRadius.circular(16)),
+                                child: TextButton(
+                                    onPressed: () async {
+                                      try {
+                                        await auth
+                                            .createUserWithEmailAndPassword(
+                                                email: this.email,
+                                                password: this.password);
+                                        Navigator.push(context,
+                                            MaterialPageRoute(
+                                          builder: (context) {
+                                            return ProfilePicure();
+                                          },
+                                        ));
+                                      } catch (e) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(SnackBar(
+                                                content: Text(
+                                                    "لا يوجد اتصال بالانتر نت ")));
+                                      }
+                                    },
+                                    child: Text(
+                                      'Sign up',
+                                      style: TextStyle(
+                                          color: Colors.white, fontSize: 17),
+                                    ))),
 
-                          Center(
-                            child: OutlinedButton(
-                              onPressed: _handleSignIn,
-                              style: ButtonStyle(
-                                padding: MaterialStateProperty.all<
-                                    EdgeInsetsGeometry>(
-                                  EdgeInsets.symmetric(
-                                      vertical: 20, horizontal: 80),
-                                ),
-                                shape: MaterialStateProperty.resolveWith<
-                                    OutlinedBorder>(
-                                  (Set<MaterialState> states) {
-                                    return RoundedRectangleBorder(
-                                      borderRadius: BorderRadius.circular(
-                                          10.0), // Border radius
-                                    );
-                                  },
-                                ),
-                              ),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  Image.asset(
-                                    'assets/google 1 (1).png',
-                                    alignment: Alignment.center,
-                                    // Add your Google logo asset here
-                                    height: 20,
-                                  ),
-                                  SizedBox(
-                                    width: 10,
-                                  ),
-                                  Text(
-                                    'Sign up with Google',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 15,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  ),
-                                ],
-                              ),
+                            //button
+
+                            SizedBox(
+                              height: 10,
                             ),
-                          ),
-                          SizedBox(
-                            height: 10,
-                          ),
-                          Center(
-                            child: OutlinedButton(
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Sign up',
+                                  style: TextStyle(
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                    color: Colors.black,
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 2,
+                                ),
+                                Text(
+                                  'With Others',
+                                  style: TextStyle(
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.normal,
+                                      color: Colors.black),
+                                ),
+                              ],
+                            ),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            //sign in with google
+
+                            Center(
+                              child: OutlinedButton(
                                 onPressed: _handleSignIn,
                                 style: ButtonStyle(
                                   padding: MaterialStateProperty.all<
                                       EdgeInsetsGeometry>(
                                     EdgeInsets.symmetric(
-                                        vertical: 20, horizontal: 70),
+                                        vertical: 20, horizontal: 80),
                                   ),
                                   shape: MaterialStateProperty.resolveWith<
                                       OutlinedBorder>(
                                     (Set<MaterialState> states) {
                                       return RoundedRectangleBorder(
                                         borderRadius: BorderRadius.circular(
-                                            10), // Border radius
+                                            10.0), // Border radius
                                       );
                                     },
                                   ),
                                 ),
-                                //sign in with facebook
                                 child: Row(
                                   mainAxisSize: MainAxisSize.min,
                                   children: <Widget>[
                                     Image.asset(
-                                      'assets/facebook 1.png',
+                                      'assets/google 1 (1).png',
                                       alignment: Alignment.center,
+                                      // Add your Google logo asset here
                                       height: 20,
                                     ),
                                     SizedBox(
                                       width: 10,
                                     ),
                                     Text(
-                                      'Sign up with Facebook',
+                                      'Sign up with Google',
                                       style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 15,
                                       ),
                                       textAlign: TextAlign.center,
-                                    )
+                                    ),
                                   ],
-                                )),
-                          ),
-                        ],
-                      )
-                    ],
-                  )),
-            ],
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10,
+                            ),
+                            Center(
+                              child: OutlinedButton(
+                                  onPressed: _handleSignIn,
+                                  style: ButtonStyle(
+                                    padding: MaterialStateProperty.all<
+                                        EdgeInsetsGeometry>(
+                                      EdgeInsets.symmetric(
+                                          vertical: 20, horizontal: 70),
+                                    ),
+                                    shape: MaterialStateProperty.resolveWith<
+                                        OutlinedBorder>(
+                                      (Set<MaterialState> states) {
+                                        return RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.circular(
+                                              10), // Border radius
+                                        );
+                                      },
+                                    ),
+                                  ),
+                                  //sign in with facebook
+                                  child: Row(
+                                    mainAxisSize: MainAxisSize.min,
+                                    children: <Widget>[
+                                      Image.asset(
+                                        'assets/facebook 1.png',
+                                        alignment: Alignment.center,
+                                        height: 20,
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                      Text(
+                                        'Sign up with Facebook',
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 15,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      )
+                                    ],
+                                  )),
+                            ),
+                          ],
+                        )
+                      ],
+                    )),
+              ],
+            ),
           ),
-          ),
-            ],
-        ),
-    )
-      
+        ],
+      ),
     );
   }
 

@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_6/screens/Addpost.dart';
+import 'package:flutter_application_6/screens/adddata.dart';
 import 'package:flutter_application_6/screens/login.dart';
 import 'package:flutter_application_6/screens/profilepicture.dart';
 import 'package:flutter_application_6/widgets/background-color.dart';
@@ -78,7 +79,12 @@ class _HomePageState extends State<HomePage> {
             },
           ),
           IconButton(
-              onPressed: () {},
+              onPressed: () {
+                  Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => AddData()),
+              );
+              },
               icon: Icon(
                 Icons.notifications_outlined,
                 size: 30,
@@ -143,19 +149,7 @@ class _HomePageState extends State<HomePage> {
                 ),
               ),
             ),
-            ListTile(
-              leading: Icon(
-                Icons.people_outlined,
-                color: Colors.white,
-              ),
-              title: Text('Friends',
-                  style: TextStyle(
-                    color: Colors.white,
-                  )),
-              onTap: () {
-                // Handle tap on Settings
-              },
-            ),
+            
             ListTile(
               leading: Icon(
                 Icons.people_alt,
@@ -211,6 +205,8 @@ class _HomePageState extends State<HomePage> {
       body: Stack(
         children: [
           BackgroundColor(),
+          SingleChildScrollView( 
+            child: 
           Positioned.fill(
               child: Container(
                   margin: EdgeInsets.all(9),
@@ -275,7 +271,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                       )
                     ],
-                  ))),
+                  ))
+          ),
+          ),
         ],
       ),
 
