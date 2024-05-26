@@ -76,6 +76,7 @@ class _AddDataState extends State<AddData> {
 
   String? groupValue = "yes";
   String? temperature = "now";
+  String? cleaning = "no";
   @override
   void dispose() {
     _dateController.dispose();
@@ -723,52 +724,51 @@ class _AddDataState extends State<AddData> {
                   children: [
                     RadioListTile(
                         title: Text('Not needed'),
-                        value: " Full",
-                        groupValue: groupValue,
+                        value: " not needed",
+                        groupValue: cleaning,
                         onChanged: (Val) {
                           setState(() {
-                            groupValue = Val;
+                            cleaning = Val;
                           });
                         }),
                     RadioListTile(
                         title: Text('leaves every third months'),
-                        value: "Part Sun",
-                        groupValue: groupValue,
+                        value: " every 3 month",
+                        groupValue: cleaning,
                         onChanged: (Val) {
                           setState(() {
-                            groupValue = Val;
+                            cleaning = Val;
                           });
                         }),
                     RadioListTile(
                         title: Text('leaves every second month'),
-                        value: "Part shade",
-                        groupValue: groupValue,
+                        value: "every 2 month",
+                        groupValue: cleaning,
                         onChanged: (Val) {
                           setState(() {
-                            groupValue = Val;
+                            cleaning = Val;
                           });
                         }),
                   ],
                 ),
               ),
               Container(
-            height: 50,
-            width: 110,
-            decoration: BoxDecoration(
-                color: Color.fromARGB(255, 43, 165, 120),
-                borderRadius: BorderRadius.circular(16)),
-            child: TextButton(
-              onPressed: () {},
-              child: Text(
-                'Add data',
-                style: TextStyle(color: Colors.white, fontSize: 17),
+                height: 50,
+                width: 110,
+                decoration: BoxDecoration(
+                    color: Color.fromARGB(255, 43, 165, 120),
+                    borderRadius: BorderRadius.circular(16)),
+                child: TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'Add data',
+                    style: TextStyle(color: Colors.white, fontSize: 17),
+                  ),
+                ),
               ),
-            ),
-          ),
             ],
             crossAxisAlignment: CrossAxisAlignment.start,
           ),
-          
         ),
       ),
     );
