@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_6/main.dart';
+import 'package:flutter_application_6/screens/Checkout.dart';
 import 'package:flutter_application_6/widgets/background-color.dart';
 
 class ShoppingCartPage extends StatefulWidget {
@@ -30,6 +31,16 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+          size: 40,
+            color: Color.fromARGB(255, 5, 77, 59),
+            weight: 300,),
+          onPressed: () {
+            
+            Navigator.pop(context);
+          },
+        ),
         title: Center(
           child: Text(
             'Shopping Cart',
@@ -46,11 +57,11 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
               // Simulate adding a product to the cart
               _addToCart(Product('Product ${_cartItems.length + 1}', 10));
             },
-            backgroundColor: Colors.white, // Background color of the button
+            backgroundColor: Colors.transparent, 
             foregroundColor: Color(0xFF054D3B), // Color of the icon
             elevation: 0.0,
             child: Icon(
-              Icons.shopping_cart_checkout_outlined,size: 30,
+              Icons.add_shopping_cart_outlined,size: 30,
               color: Color(0xFF054D3B),
             ),
           ),
@@ -95,18 +106,37 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
       
          bottomNavigationBar: _cartItems.isNotEmpty ?
          
-          BottomAppBar(
+        BottomAppBar(
         
         child:
          Padding(
-          padding: const EdgeInsets.all(16.0),
+          padding: const EdgeInsets.only(bottom: 10.0),
           
-          child: Text(
+          child:Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+
+          Text(
             'Total: \$${_totalPrice.toStringAsFixed(2)}',
-            style: TextStyle(fontSize: 20),
+            style: TextStyle(fontSize: 25, color: Color.fromARGB(255, 5, 77, 59) ),
           ),
+          IconButton(
+          icon: Icon(Icons.shopping_cart_checkout_outlined,
+          size: 40, color: Color.fromARGB(255, 5, 77, 59) ,), 
+          onPressed: () {
+            Navigator.push(
+                  context,
+              MaterialPageRoute(
+                builder: (context) => CheckoutPage(cartItems:_cartItems),
+                          ),
+                        );
+          },
         ),
-      )
+            ],
+        ),
+      ),
+          )
+          
       : null,
     
       

@@ -1,6 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_6/screens/Addpost.dart';
+import 'package:flutter_application_6/screens/PlantScreen.dart';
+import 'package:flutter_application_6/screens/Plants.dart';
 import 'package:flutter_application_6/screens/adddata.dart';
 import 'package:flutter_application_6/screens/login.dart';
 import 'package:flutter_application_6/screens/profilepicture.dart';
@@ -132,7 +134,7 @@ class _HomePageState extends State<HomePage> {
                 //Navigate to another page when the ListTile is tapped
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => AddPost()),
+                  MaterialPageRoute(builder: (context) => Plantscreen()),
                 );
                 // Handle tap on Settings
               },
@@ -248,9 +250,27 @@ class _HomePageState extends State<HomePage> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(
-                        height: 120,
-                      ),
+                      SizedBox(height: 10,),
+                      
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        buildImageContainer(context, 'assets/your_image.png', 'Ferns'),
+                        buildImageContainer(context, 'assets/your_image.png', 'Herbs'),
+                        buildImageContainer(context, 'assets/your_image.png', 'Flowering Plants'),
+                    ],
+                    ),
+                    SizedBox(height: 10,),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        buildImageContainer(context, 'assets/your_image.png', 'Ferns'),
+                        buildImageContainer(context, 'assets/your_image.png', 'Herbs'),
+                        buildImageContainer(context, 'assets/your_image.png', 'Flowering Plants'),
+                    ],
+                    ),
+                      
+                      
                       Text(
                         'Diseases',
                         style: TextStyle(
@@ -284,3 +304,39 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+Widget buildImageContainer(BuildContext context, String imagePath, String label) {
+    return Column(
+      children: [
+        Container(
+          
+          decoration: BoxDecoration(
+            border: Border.all(),
+            borderRadius: BorderRadius.circular(30),
+            color:Color.fromARGB(255, 146, 177, 154),
+          ),
+          width: 100,
+          height: 145,
+          child: InkWell(
+            onTap: () {
+              print('Image tapped!');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => Plants()),
+              );
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+          
+        ),
+        SizedBox(height: 8), // Add space between the image and text
+        Text(label),
+      ],
+    );
+  }
+
