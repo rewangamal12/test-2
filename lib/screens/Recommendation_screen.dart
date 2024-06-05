@@ -1,17 +1,28 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_application_6/screens/RecommendedPlants.dart';
 import 'package:flutter_application_6/widgets/background-color.dart';
+import 'package:flutter_application_6/widgets/bottombar.dart';
 import 'package:flutter_application_6/widgets/outlinedbutton.dart';
 
 class Recommendation extends StatefulWidget {
-  const Recommendation({super.key});
+//  const Recommendation({super.key});
+  
+  
 
   @override
   State<Recommendation> createState() => _RecommendationState();
 }
 
 class _RecommendationState extends State<Recommendation> {
+
+int _selectedIndex = 1;
+    void _onItemTapped(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
     final List<Question> _questions = <Question>[
     Question(
       text: 'SUN',
@@ -64,7 +75,10 @@ class _RecommendationState extends State<Recommendation> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-      leading: IconButton(
+      leading: 
+      Image.asset('assets/logo1.png'),
+      
+      /*IconButton(
         icon:Icon(Icons.arrow_back_ios, 
            size: 50, 
            color:  Color.fromARGB(255, 5, 77, 59),
@@ -75,7 +89,7 @@ class _RecommendationState extends State<Recommendation> {
         ),
     actions: [
       Image.asset('assets/logo1.png'),
-    ],
+    ],*/
     ),
     
     body: Stack(
@@ -141,7 +155,12 @@ class _RecommendationState extends State<Recommendation> {
                         color: Color.fromARGB(255, 43, 165, 120),
                       borderRadius: BorderRadius.circular(16)),
                     child: TextButton(
-                      onPressed: (){},
+                      onPressed: (){
+                        Navigator.push(
+                         context,
+                         MaterialPageRoute(builder: (context) => Recommendedplants()),
+                       );
+                      },
                        child: Text(
                                       'Submit',
                                       style: TextStyle(
@@ -157,11 +176,17 @@ class _RecommendationState extends State<Recommendation> {
           ),
         
       ],
-    )
+    ),
+      bottomNavigationBar: CustomBottomNavigationBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
+      ),
     
     );
   }
 }
+
+
 
 class Question {
   final String text;

@@ -321,7 +321,7 @@ Widget buildImageContainer(BuildContext context, String imagePath, String label)
               print('Image tapped!');
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Plants()),
+                MaterialPageRoute(builder: (context) => Plantscreen()),
               );
             },
             child: ClipRRect(

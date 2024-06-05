@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_6/screens/AllPlants.dart';
 import 'package:flutter_application_6/screens/Community.dart';
 import 'package:flutter_application_6/screens/ProfilePage.dart';
+import 'package:flutter_application_6/screens/Recommendation_screen.dart';
 import 'package:flutter_application_6/screens/Store.dart';
 import 'package:flutter_application_6/screens/homepage.dart';
 import 'package:flutter_application_6/screens/reminders.dart';
@@ -41,12 +42,12 @@ class CustomBottomNavigationBar extends StatelessWidget {
             onTap: () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => CommunityPage()), // Replace YourPage() with the page you want to navigate to
+        MaterialPageRoute(builder: (context) => Recommendation()), // Replace YourPage() with the page you want to navigate to
       );
          },
 
-            child:  Icon(Icons.handshake_outlined, size: 30),),
-          label: 'Community',
+            child:  Icon(Icons.recommend_outlined, size: 35),),
+          label: 'Recommendation',
         ),
         BottomNavigationBarItem(
           icon:GestureDetector(

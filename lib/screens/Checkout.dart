@@ -174,7 +174,7 @@ class CheckoutPage extends StatelessWidget {
             
             
             SizedBox(height: 10),
-                Center(
+              Center(
                   child: Container(
                       height: 50,
                           width: 110,

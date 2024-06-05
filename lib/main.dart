@@ -1,8 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_6/screens/login.dart';
-//import 'package:flutter_application_6/screens/login.dart';
-//import 'package:flutter_application_6/screens/signup.dart';
+
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_application_6/screens/homepage.dart';
 import 'firebase_options.dart';
