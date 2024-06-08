@@ -5,7 +5,7 @@ import 'package:flutter_application_6/screens/ProfilePage.dart';
 import 'package:flutter_application_6/screens/Recommendation_screen.dart';
 import 'package:flutter_application_6/screens/Store.dart';
 import 'package:flutter_application_6/screens/homepage.dart';
-import 'package:flutter_application_6/screens/reminders.dart';
+import 'package:flutter_application_6/screens/Addreminder.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int selectedIndex;

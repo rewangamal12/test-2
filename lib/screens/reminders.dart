@@ -1,17 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_6/screens/Addreminder.dart';
 import 'package:flutter_application_6/screens/AllPlants.dart';
 import 'package:flutter_application_6/widgets/background-color.dart';
 import 'package:flutter_application_6/widgets/bottombar.dart';
 
-class ReminderPage extends StatelessWidget {
-  int _selectedIndex = 3;
 
+class ReminderPage extends StatefulWidget {
+  const ReminderPage({super.key});
+  
+
+  @override
+  State<ReminderPage> createState() => _RemindersPageState();
+}
+
+class _RemindersPageState extends State<ReminderPage> {
+  int _selectedIndex = 3;
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,7 +113,7 @@ class ReminderPage extends StatelessWidget {
                       onPressed: () {
                         Navigator.push(context, MaterialPageRoute(
                           builder: (context) {
-                            return ReminderPage();
+                            return (ReminderPage());
                           },
                         )
                         );
@@ -116,309 +124,35 @@ class ReminderPage extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            top: 240,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      // تنفيذ أي شيء تحتاجه عند النقر على السهم
-                    },
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 135, vertical: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color.fromRGBO(88, 187, 128, 100),
-                        border: Border.all(
-                          color: Color.fromRGBO(88, 187, 128, 100),
-                          width: 1,
-                        ),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.arrow_forward_ios),
-                          Text(
-                            'Select',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal,
-                              color: Color.fromARGB(255, 5, 77, 59),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: 295,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      // تنفيذ أي شيء تحتاجه عند النقر على السهم
-                    },
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 35, vertical: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color.fromRGBO(88, 187, 128, 100),
-                        border: Border.all(
-                          color: Color.fromRGBO(88, 187, 128, 100),
-                          width: 1,
-                        ),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.arrow_forward_ios),
-                          Text(
-                            'Select',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal,
-                              color: Color.fromARGB(255, 5, 77, 59),
-                            ),
-                          ),
-                          SizedBox(width: 7),
-                          Text(
-                            "Remind Me About",
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 5, 77, 59),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: 355,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      // تنفيذ أي شيء تحتاجه عند النقر على السهم
-                    },
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 62, vertical: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color.fromRGBO(88, 187, 128, 100),
-                        border: Border.all(
-                          color: Color.fromRGBO(88, 187, 128, 100),
-                          width: 1,
-                        ),
-                      ),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.arrow_forward_ios),
-                          Text(
-                            'Select',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal,
-                              color: Color.fromARGB(255, 5, 77, 59),
-                            ),
-                          ),
-                          SizedBox(width: 7),
-                          Text(
-                            "Repeat Every",
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 5, 77, 59),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          Positioned(
-            top: 415,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      // تنفيذ أي شيء تحتاجه عند النقر على السهم
-                    },
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 104, vertical: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color.fromRGBO(88, 187, 128, 100),
-                        border: Border.all(
-                          color: Color.fromRGBO(88, 187, 128, 100),
-                          width: 1,
-                        ),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.arrow_forward_ios),
-                          Text(
-                            'Select',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal,
-                              color: Color.fromARGB(255, 5, 77, 59),
-                            ),
-                          ),
-                          SizedBox(width: 7),
-                          Text(
-                            "Time",
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 5, 77, 59),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: 475,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      // تنفيذ أي شيء تحتاجه عند النقر على السهم
-                    },
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 77, vertical: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color.fromRGBO(88, 187, 128, 100),
-                        border: Border.all(
-                          color: Color.fromRGBO(88, 187, 128, 100),
-                          width: 1,
-                        ),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Icon(Icons.arrow_forward_ios),
-                          Text(
-                            'Select',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.normal,
-                              color: Color.fromARGB(255, 5, 77, 59),
-                            ),
-                          ),
-                          SizedBox(width: 7),
-                          Text(
-                            "Previously",
-                            style: TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 5, 77, 59),
-                            ),
-                          )
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Positioned(
-            top: 540,
-            left: 0,
-            right: 0,
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  InkWell(
-                    onTap: () {
-                      // تنفيذ أي شيء تحتاجه عند النقر على السهم
-                    },
-                    child: Container(
-                      padding:
-                          EdgeInsets.symmetric(horizontal: 35, vertical: 10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Color.fromRGBO(88, 187, 128, 100),
-                        border: Border.all(
-                          color: Color.fromRGBO(88, 187, 128, 100),
-                          width: 1,
-                        ),
-                      ),
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Set reminder',
-                            style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold,
-                              color: Color.fromARGB(255, 5, 77, 59),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
         ],
+      ),  
+      floatingActionButton: InkResponse(
+        onTap: () {
+          Navigator.push(context, MaterialPageRoute(
+                          builder: (context) {
+                            return AddReminderPage();
+                          },
+                        )
+                        );
+        },
+        child: 
+      Card(
+        shape: BeveledRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+        color: Color.fromRGBO(88, 187, 128, 100),
+        child: Icon(
+          Icons.add_outlined,
+          color: Colors.white,
+          size: 80,
+        ),
       ),
-      bottomNavigationBar: CustomBottomNavigationBar(
+      ),
+        bottomNavigationBar: CustomBottomNavigationBar(
         selectedIndex: _selectedIndex,
         onItemTapped: _onItemTapped,
       ),
+
     );
   }
-
-  void setState(Null Function() param0) {}
 }
