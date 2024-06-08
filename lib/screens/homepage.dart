@@ -2,15 +2,13 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_6/screens/Addpost.dart';
 import 'package:flutter_application_6/screens/PlantScreen.dart';
-import 'package:flutter_application_6/screens/Plants.dart';
+import 'package:flutter_application_6/screens/indoorplants.dart';
 import 'package:flutter_application_6/screens/adddata.dart';
 import 'package:flutter_application_6/screens/login.dart';
+import 'package:flutter_application_6/screens/outdoorplants.dart';
 import 'package:flutter_application_6/screens/profilepicture.dart';
 import 'package:flutter_application_6/widgets/background-color.dart';
-//import 'package:flutter_application_6/screens/signup.dart';
-//import 'package:flutter_application_6/screens/constants.dart';
-//import 'package:google_fonts/google_fonts.dart';
-//import 'package:carousel_slider/carousel_slider.dart';
+
 import 'package:flutter_application_6/widgets/image_slider.dart';
 
 import 'package:flutter_application_6/widgets/bottombar.dart';
@@ -251,24 +249,113 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                       SizedBox(height: 10,),
+                      Column(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              children: [
+                                Container(
+                                      
+                                        decoration: BoxDecoration(
+                                        border: Border.all(),
+                                        borderRadius: BorderRadius.circular(30),
+                                        color:Color.fromARGB(255, 146, 177, 154),
+                                      ),
+                                      width: 100,
+                                      height: 145,
+                                      child: InkWell(
+                                        onTap: () {
+                                          print('Image tapped!');
+                                          Navigator.push(
+                                         context,
+                                        MaterialPageRoute(builder: (context) => indoorPlants()),
+                                                ); 
+                                        },
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(30),
+                                          child: Image.asset(
+                                            'assets/your_image.png', 
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      
+                                    ),
+                                    SizedBox(height: 8), // Space between the image and the text
+                                    Text(
+                                          'Indoor',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 5, 77, 59),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                               ),
+                                      ),
+                                    
+                              ],
+                            ),
+                                Column(
+                                  children: [
+                                    Container(
+                                      
+                                     decoration: BoxDecoration(
+                                        border: Border.all(),
+                                        borderRadius: BorderRadius.circular(30),
+                                        color:Color.fromARGB(255, 146, 177, 154),
+                                      ),
+                                      width: 100,
+                                      height: 145,
+                                      child: InkWell(
+                                        onTap: () {
+                                          print('Image tapped!');
+                                            Navigator.push(
+                                        context,
+                                    MaterialPageRoute(builder: (context) =>Outdoorplants()),
+                                         ); 
+
+                                          
+                                        },
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(30),
+                                          child: Image.asset(
+                                            'assets/your_image.png', 
+                                            fit: BoxFit.cover,
+                                          ),
+                                        ),
+                                      ),
+                                      
+                                    ),
+                                    SizedBox(height: 8), // Space between the image and the text
+                                    Text(
+                                          'Outdoor',
+                                      style: TextStyle(
+                                        color: Color.fromARGB(255, 5, 77, 59),
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                               ),
+                                      ),
+                                  ],
+                                ),
+                              
+                          ],
+                        ),
+                          
                       
-                    Row(
+                      ],
+                      
+                    ),
+                      
+                  /*  Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        buildImageContainer(context, 'assets/your_image.png', 'Ferns'),
-                        buildImageContainer(context, 'assets/your_image.png', 'Herbs'),
-                        buildImageContainer(context, 'assets/your_image.png', 'Flowering Plants'),
+                      /*  buildImageContainer(context, 'assets/your_image.png', 'Ferns'),
+                        buildImageContainer(context, 'assets/your_image.png', 'Herbs'),*/
+                      
                     ],
-                    ),
+                    ),*/
                     SizedBox(height: 10,),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        buildImageContainer(context, 'assets/your_image.png', 'Ferns'),
-                        buildImageContainer(context, 'assets/your_image.png', 'Herbs'),
-                        buildImageContainer(context, 'assets/your_image.png', 'Flowering Plants'),
-                    ],
-                    ),
+              
                       
                       
                       Text(
@@ -321,7 +408,7 @@ Widget buildImageContainer(BuildContext context, String imagePath, String label)
               print('Image tapped!');
               Navigator.push(
                 context,
-                MaterialPageRoute(builder: (context) => Plantscreen()),
+                MaterialPageRoute(builder: (context) => indoorPlants()),
               );
             },
             child: ClipRRect(
