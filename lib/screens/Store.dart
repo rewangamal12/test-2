@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_6/screens/Searchbar.dart';
 import 'package:flutter_application_6/screens/Serach_Store.dart';
-import 'package:flutter_application_6/screens/Shoppingcart.dart';
+import 'package:flutter_application_6/screens/e-commerce/Shoppingcart.dart';
 import 'package:flutter_application_6/widgets/bottombar.dart';
 
 

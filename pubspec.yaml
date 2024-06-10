@@ -46,6 +46,12 @@ dependencies:
   firebase_auth: ^4.19.5
   firebase_core: ^2.31.0
   cloud_firestore:
+  cached_network_image: ^3.3.1
+  loading_indicator:
+  intl:
+  firebase_messaging:
+  flutter_local_notifications:
+  timezone: ^0.9.3
   #firebase_analytics: ^10.10.5
   
 

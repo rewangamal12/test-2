@@ -1,8 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_6/screens/login.dart';
-import 'package:flutter_application_6/screens/signup.dart';
-import 'package:flutter_application_6/screens/homepage.dart';
+import 'package:flutter_application_6/screens/auth/login.dart';
+import 'package:flutter_application_6/screens/auth/signup.dart';
+import 'package:flutter_application_6/screens/e-commerce/homepage.dart';
 import 'package:flutter_application_6/widgets/dropdown.dart';
 
 import 'package:image_picker/image_picker.dart';

@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_6/screens/verification.dart';
@@ -12,6 +13,21 @@ class ForgetPassPage extends StatefulWidget {
 
 class _ForgetPassPageState extends State<ForgetPassPage> {
   final TextEditingController _emailController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  Future<void> _resetPassword() async {
+    try {
+      await _auth.sendPasswordResetEmail(email: _emailController.text);
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Password reset email sent')),
+      );
+      Navigator.pop(context);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Failed to send password reset email: $e')),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,12 +91,12 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
               style:TextStyle(
               fontSize: 20,
                fontWeight: FontWeight.bold,),),
-             Text('to recieve a verification code',
+          /*   Text('to recieve a verification code',
               style:TextStyle(
                 fontSize: 20,
                  fontWeight:
                   FontWeight.bold,
-                   color: Colors.black),),
+                   color: Colors.black),),*/
              SizedBox(
                 height: 25,
               ),
@@ -118,13 +134,8 @@ class _ForgetPassPageState extends State<ForgetPassPage> {
                       SizedBox(height: 80,),
                       Padding(padding: EdgeInsets.symmetric(horizontal: 120,),
                       child: GestureDetector(
-                  onTap: () {
-                    
-                     Navigator.push(
-                         context,
-                         MaterialPageRoute(builder: (context) => VerifyEmail()), // Replace NextScreen() with the screen you want to navigate to
-                       );
-                      },
+                  onTap:_resetPassword,
+                      
                 child: Container(
                   padding: EdgeInsets.all(16),
                   decoration: BoxDecoration(

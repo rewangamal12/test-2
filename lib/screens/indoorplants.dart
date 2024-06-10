@@ -3,11 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_6/screens/Addpost.dart';
-import 'package:flutter_application_6/screens/PlantScreen.dart';
+import 'package:flutter_application_6/screens/e-commerce/PlantScreen.dart';
 import 'package:flutter_application_6/screens/Plantdetails.dart';
 import 'package:flutter_application_6/screens/indoorplants.dart';
 import 'package:flutter_application_6/screens/adddata.dart';
-import 'package:flutter_application_6/screens/login.dart';
+import 'package:flutter_application_6/screens/auth/login.dart';
 import 'package:flutter_application_6/screens/profilepicture.dart';
 import 'package:flutter_application_6/widgets/background-color.dart';
 

@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_6/screens/AllPlants.dart';
 import 'package:flutter_application_6/screens/Community.dart';
 import 'package:flutter_application_6/screens/ProfilePage.dart';
-import 'package:flutter_application_6/screens/Recommendation_screen.dart';
+import 'package:flutter_application_6/screens/Recommendation/Recommendation_screen.dart';
 import 'package:flutter_application_6/screens/Store.dart';
-import 'package:flutter_application_6/screens/homepage.dart';
-import 'package:flutter_application_6/screens/Addreminder.dart';
+import 'package:flutter_application_6/screens/e-commerce/Shoppingcart.dart';
+import 'package:flutter_application_6/screens/e-commerce/homepage.dart';
+import 'package:flutter_application_6/screens/reminder/Addreminder.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
   final int selectedIndex;
@@ -54,12 +55,12 @@ class CustomBottomNavigationBar extends StatelessWidget {
     onTap: () {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => StorePage()), // Replace YourPage() with the page you want to navigate to
+        MaterialPageRoute(builder: (context) => ShoppingCartPage()), // Replace YourPage() with the page you want to navigate to
       );
     },
     child:  Icon(Icons.shopping_cart, size: 30),
     ),
-          label: 'Store',
+          label: 'Shopping cart',
         ),
         BottomNavigationBarItem(
           icon:GestureDetector(
@@ -72,7 +73,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
     },child: Icon(Icons.alarm, size: 30),),
           label: 'Reminder',
         ),
-        BottomNavigationBarItem(
+      /*  BottomNavigationBarItem(
           icon:GestureDetector(
     onTap: () {
       Navigator.push(
@@ -82,7 +83,7 @@ class CustomBottomNavigationBar extends StatelessWidget {
       );
     },child: Icon(Icons.account_circle_outlined, size: 30),),
           label: 'Profile',
-        ),
+        ),*/
       ],
       currentIndex: selectedIndex,
       onTap: onItemTapped,

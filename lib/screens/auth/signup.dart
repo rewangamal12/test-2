@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_application_6/screens/auth/login.dart';
 //import 'package:flutter_application_6/screens/homepage.dart';
 import 'package:flutter_application_6/screens/profilepicture.dart';
 import 'package:flutter_application_6/widgets/background-image.dart';
@@ -164,7 +165,7 @@ class _SignupPageState extends State<SignupPage> {
                                         Navigator.push(context,
                                             MaterialPageRoute(
                                           builder: (context) {
-                                            return ProfilePicure();
+                                            return LoginPage();
                                           },
                                         ));
                                       } catch (e) {

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_6/screens/newpassword.dart';
+import 'package:flutter_application_6/screens/auth/newpassword.dart';
 import 'package:flutter_application_6/widgets/background-color.dart';
 
 class VerifyEmail extends StatelessWidget {

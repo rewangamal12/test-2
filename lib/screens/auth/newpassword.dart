@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_6/widgets/background-color.dart';
-import 'package:flutter_application_6/screens/login.dart';
+import 'package:flutter_application_6/screens/auth/login.dart';
 
 class NewPassword extends StatelessWidget {
   const NewPassword({super.key});

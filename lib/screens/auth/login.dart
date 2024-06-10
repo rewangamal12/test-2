@@ -3,15 +3,16 @@ import 'dart:ui';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_6/screens/forgetpass.dart';
-import 'package:flutter_application_6/screens/homepage.dart';
-import 'package:flutter_application_6/screens/signup.dart';
+import 'package:flutter_application_6/screens/auth/forgetpass.dart';
+import 'package:flutter_application_6/screens/e-commerce/homepage.dart';
+import 'package:flutter_application_6/screens/auth/signup.dart';
+import 'package:flutter_application_6/screens/e-commerce/homepage.dart';
 import 'package:flutter_application_6/widgets/background-image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+  const LoginPage({key});
 
   @override
   State<LoginPage> createState() => _LoginPageState();
