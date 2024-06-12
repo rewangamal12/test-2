@@ -1,7 +1,5 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_6/screens/auth/login.dart';
-
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_application_6/screens/e-commerce/homepage.dart';
 import 'firebase_options.dart';
@@ -33,6 +31,7 @@ class MyApp extends StatelessWidget {
     //Color customColor = Color(0xFFE8F6B8);
 
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Plantopia',
       theme: ThemeData(
         useMaterial3: true,

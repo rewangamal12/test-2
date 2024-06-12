@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 
 class ImageSlider extends StatelessWidget {
-  final List<String> imageUrls;
+  final List<String> imagePaths;
 
-  ImageSlider({required this.imageUrls});
+  ImageSlider({required this.imagePaths});
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +20,7 @@ class ImageSlider extends StatelessWidget {
         autoPlayAnimationDuration: Duration(milliseconds: 800), // Set animation duration
         viewportFraction: 0.8, // Define fraction of viewport to show
       ),
-      items: imageUrls.map((imageUrl) {
+      items: imagePaths.map((imagePath) {
         return Builder(
           builder: (BuildContext context) {
             return Container(
@@ -30,7 +30,7 @@ class ImageSlider extends StatelessWidget {
                 color: Colors.grey,
                 borderRadius: BorderRadius.circular(8.0),
                 image: DecorationImage(
-                  image: NetworkImage(imageUrl),
+                  image: AssetImage(imagePath),
                   fit: BoxFit.cover,
                 ),
               ),

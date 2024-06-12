@@ -145,7 +145,7 @@ class _SignupPageState extends State<SignupPage> {
                           ),
                         ),
                         SizedBox(
-                          height: 20,
+                          height: 40,
                         ),
                         Column(
                           children: [
@@ -181,127 +181,6 @@ class _SignupPageState extends State<SignupPage> {
                                           color: Colors.white, fontSize: 17),
                                     ))),
 
-                            //button
-
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Text(
-                                  'Sign up',
-                                  style: TextStyle(
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.bold,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 2,
-                                ),
-                                Text(
-                                  'With Others',
-                                  style: TextStyle(
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.normal,
-                                      color: Colors.black),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            //sign in with google
-
-                            Center(
-                              child: OutlinedButton(
-                                onPressed: _handleSignIn,
-                                style: ButtonStyle(
-                                  padding: MaterialStateProperty.all<
-                                      EdgeInsetsGeometry>(
-                                    EdgeInsets.symmetric(
-                                        vertical: 20, horizontal: 80),
-                                  ),
-                                  shape: MaterialStateProperty.resolveWith<
-                                      OutlinedBorder>(
-                                    (Set<MaterialState> states) {
-                                      return RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(
-                                            10.0), // Border radius
-                                      );
-                                    },
-                                  ),
-                                ),
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Image.asset(
-                                      'assets/google 1 (1).png',
-                                      alignment: Alignment.center,
-                                      // Add your Google logo asset here
-                                      height: 20,
-                                    ),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      'Sign up with Google',
-                                      style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 15,
-                                      ),
-                                      textAlign: TextAlign.center,
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            Center(
-                              child: OutlinedButton(
-                                  onPressed: _handleSignIn,
-                                  style: ButtonStyle(
-                                    padding: MaterialStateProperty.all<
-                                        EdgeInsetsGeometry>(
-                                      EdgeInsets.symmetric(
-                                          vertical: 20, horizontal: 70),
-                                    ),
-                                    shape: MaterialStateProperty.resolveWith<
-                                        OutlinedBorder>(
-                                      (Set<MaterialState> states) {
-                                        return RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              10), // Border radius
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  //sign in with facebook
-                                  child: Row(
-                                    mainAxisSize: MainAxisSize.min,
-                                    children: <Widget>[
-                                      Image.asset(
-                                        'assets/facebook 1.png',
-                                        alignment: Alignment.center,
-                                        height: 20,
-                                      ),
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Text(
-                                        'Sign up with Facebook',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 15,
-                                        ),
-                                        textAlign: TextAlign.center,
-                                      )
-                                    ],
-                                  )),
-                            ),
                           ],
                         )
                       ],

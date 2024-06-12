@@ -114,9 +114,12 @@ class _RecommendationState extends State<Recommendation> {
                     ),
                     isExpanded: true,
                     items: <String>[
-                      'Full sun',
-                      'part sun',
-                      'part shade',
+                    'Full sun',
+                    'Full sun, Part sun ,part shade',
+                    'Full sun, Part sun',
+                    'part sun , part shade',
+                    'part sun',
+                    'part shade',
                     ]
                         .map(
                           (value) => DropdownMenuItem<String>(
@@ -370,9 +373,9 @@ class _RecommendationState extends State<Recommendation> {
                             // Fetch the data from Firestore
                             final querySnapshot = await FirebaseFirestore.instance
                                 .collection('category')
-                                // .where('lightNeeded', isEqualTo: selectedValueLight)
+                                .where('lightNeeded', isEqualTo: selectedValueLight)
                                 .where('Place', isEqualTo: selectedValuePlace)
-                                // .where('difficult', isEqualTo: selectedValueDifficulty)
+                                .where('difficult', isEqualTo: selectedValueDifficulty)
                                 .where('FlowerColor', isEqualTo: selectedValueColor)
                                 .get();
 

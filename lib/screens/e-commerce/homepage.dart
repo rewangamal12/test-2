@@ -7,11 +7,6 @@ import 'package:flutter_application_6/screens/adddata.dart';
 import 'package:flutter_application_6/screens/auth/login.dart';
 import 'package:flutter_application_6/screens/profilepicture.dart';
 import 'package:flutter_application_6/widgets/background-color.dart';
-
-//import 'package:flutter_application_6/screens/signup.dart';
-//import 'package:flutter_application_6/screens/constants.dart';
-//import 'package:google_fonts/google_fonts.dart';
-//import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter_application_6/widgets/image_slider.dart';
 
 import 'package:flutter_application_6/widgets/bottombar.dart';
@@ -60,6 +55,22 @@ class _HomePageState extends State<HomePage> {
       _selectedIndex = index;
     });
   }
+  void _toggleFavorite(ProductHome product) async {
+    final userId = FirebaseAuth.instance.currentUser!.email;
+    final favoritesCollection = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('favorites');
+
+    if (product.isFavorite) {
+      // Add to favorites
+      await favoritesCollection.doc(product.planetName).set(product.toJson());
+    } else {
+      // Remove from favorites
+      await favoritesCollection.doc(product.planetName).delete();
+    }
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +98,7 @@ class _HomePageState extends State<HomePage> {
               );
             },
           ),
-          IconButton(
+        /*  IconButton(
               onPressed: () {
                 Navigator.push(
                   context,
@@ -98,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                 Icons.notifications_outlined,
                 size: 30,
                 color: Color.fromARGB(255, 5, 77, 59),
-              )),
+              )),*/
           Builder(
             builder: (context) => IconButton(
               icon: Icon(
@@ -222,7 +233,7 @@ class _HomePageState extends State<HomePage> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Welcome UserName !',
+                          'Welcome',
                           style: TextStyle(
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -240,11 +251,14 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(
                           height: 10,
                         ),
-                        ImageSlider(imageUrls: [
-                          'https://hips.hearstapps.com/hmg-prod/images/jade-plant-1-645157c445e14.jpg?crop=1.00xw:0.829xh;0,0&resize=1200:*',
-                          'https://www.ikea.com/ca/en/images/products/fejka-artificial-potted-plant-indoor-outdoor-monstera__0614197_pe686822_s5.jpg',
-                          'https://www.shutterstock.com/image-photo/young-schefflera-potted-plant-isolated-260nw-526198357.jpg',
-                        ]),
+                        ImageSlider(imagePaths: [
+                          'assets/Picture12.jpg',
+                          'assets/Picture13.jpg',
+                          'assets/Picture14.jpg',
+                          'assets/Picture15.jpg',
+                          'assets/Picture16.jpg',
+                          'assets/Picture17.jpg'
+                        ],),
                         SizedBox(
                           height: 30,
                         ),
@@ -306,11 +320,11 @@ class _HomePageState extends State<HomePage> {
                             var product = productsBySection[index];
 
                             return GestureDetector(
-                             onTap: (){
-                               Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                                 return Plantscreen(Product:productsBySection[index]);
-                               }));
-                             },
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                                  return Plantscreen(Product: productsBySection[index]);
+                                }));
+                              },
                               child: Container(
                                 width: 200,
                                 height: 300,
@@ -319,20 +333,42 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      decoration:BoxDecoration(
-
+                                      decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(Radius.circular(4)),
-                                ),
+                                      ),
                                       width: 200,
-                                      height: 200,
-                                      child:Image.network(
-                                          product.imageUrls![0],
+                                      height: 180,
+                                      child: Image.network(
+                                        product.imageUrls![0],
                                         fit: BoxFit.fill,
-
                                       ),
                                     ),
-                                    Text(product.planetName ?? 'No Name',
-                                    maxLines: 1,),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          product.planetName ?? 'No Name',
+                                          maxLines: 1,
+                                        ),
+                                        IconButton(
+                                          icon: Icon(
+                                            product.isFavorite == true ? Icons.favorite : Icons.favorite_border,
+                                            color: product.isFavorite == true ? Colors.red : Colors.grey,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              product.isFavorite = !product.isFavorite;
+                                            });
+                                            _toggleFavorite(product);
+                                            product.isFavorite == true? FirebaseFirestore.instance.collection("category").doc(product.idPlants).update({
+                                              "isFavorite":true,
+                                            }) :FirebaseFirestore.instance.collection("category").doc(product.idPlants).update({
+                                              "isFavorite":false,
+                                            }) ;
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                     Text('${product.plantPricing ?? 'No Price'} EG'),
                                   ],
                                 ),
@@ -341,6 +377,7 @@ class _HomePageState extends State<HomePage> {
                           },
                           separatorBuilder: (BuildContext context, int index) => SizedBox(width: 15),
                         );
+
                       },
                     ),
                   ),
@@ -405,11 +442,11 @@ class _HomePageState extends State<HomePage> {
                             var product = productsBySection[index];
 
                             return GestureDetector(
-                             onTap: (){
-                               Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
-                                 return Plantscreen(Product:productsBySection[index]);
-                               }));
-                             },
+                              onTap: () {
+                                Navigator.push(context, MaterialPageRoute(builder: (BuildContext context) {
+                                  return Plantscreen(Product: productsBySection[index]);
+                                }));
+                              },
                               child: Container(
                                 width: 200,
                                 height: 300,
@@ -418,19 +455,42 @@ class _HomePageState extends State<HomePage> {
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
                                     Container(
-                                      decoration:BoxDecoration(
-
+                                      decoration: BoxDecoration(
                                         borderRadius: BorderRadius.all(Radius.circular(4)),
-                                ),
+                                      ),
                                       width: 200,
-                                      height: 200,
-                                      child:Image.network(
-                                          product.imageUrls![0],
+                                      height: 180,
+                                      child: Image.network(
+                                        product.imageUrls![0],
                                         fit: BoxFit.fill,
-
                                       ),
                                     ),
-                                    Text(product.planetName ?? 'No Name',maxLines: 1,overflow: TextOverflow.ellipsis,),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          product.planetName ?? 'No Name',
+                                          maxLines: 1,
+                                        ),
+                                        IconButton(
+                                          icon: Icon(
+                                            product.isFavorite == true ? Icons.favorite : Icons.favorite_border,
+                                            color: product.isFavorite == true ? Colors.red : Colors.grey,
+                                          ),
+                                          onPressed: () {
+                                            setState(() {
+                                              product.isFavorite = !product.isFavorite;
+                                            });
+                                            _toggleFavorite(product);
+                                            product.isFavorite == true? FirebaseFirestore.instance.collection("category").doc(product.idPlants).update({
+                                              "isFavorite":true,
+                                            }) :FirebaseFirestore.instance.collection("category").doc(product.idPlants).update({
+                                              "isFavorite":false,
+                                            }) ;
+                                          },
+                                        ),
+                                      ],
+                                    ),
                                     Text('${product.plantPricing ?? 'No Price'} EG'),
                                   ],
                                 ),
@@ -441,12 +501,112 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                     ),
+
+                  ),
+                   SizedBox(
+                          height: 30,
+                        ),
+                        Text(
+                          'Diseases',
+                          style: TextStyle(
+                            color: Color.fromARGB(255, 5, 77, 59),
+                            fontSize: 20,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Container(
+                    height: 250,
+                    width: double.infinity,
+                    child: StreamBuilder<QuerySnapshot>(
+                      stream: FirebaseFirestore.instance.collection('diseases').snapshots(),
+                      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(child: CircularProgressIndicator());
+                        }
+
+                        if (snapshot.hasError) {
+                          return Text('Error: ${snapshot.error}');
+                        }
+
+                        var documents = snapshot.data?.docs ?? [];
+
+                        if (documents.isEmpty) {
+                          return Container(
+                            height: MediaQuery.of(context).size.height / 1,
+                            padding: EdgeInsets.all(12.0),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                            ),
+                            child: Center(
+                              child: Text(
+                                "لا يوجد اقسام الان برجاء المتابعه",
+                                style: TextStyle(
+                                  fontSize: 15,
+                                  color: Colors.black,
+                                ),
+                              ),
+                            ),
+                          );
+                        }
+
+                        List<disease> productsBySection = documents.map((doc) {
+                          var data = doc.data() as Map<String, dynamic>;
+                          return disease.fromJson(data);
+                        }).toList();
+
+                        return ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: productsBySection.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            var product = productsBySection[index];
+
+                            return GestureDetector(
+                              onTap: () {
+
+                              },
+                              child: Container(
+                                width: 200,
+                                height: 300,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(Radius.circular(4)),
+                                      ),
+                                      width: 200,
+                                      height: 180,
+                                      child: Image.network(
+                                        product.imageUrls![0],
+                                        fit: BoxFit.fill,
+                                      ),
+                                    ),
+                                    Row(
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(
+                                          product.diseaseName ?? 'No Name',
+                                          maxLines: 1,
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          },
+                            separatorBuilder: (BuildContext context, int index) => SizedBox(width: 15),
+                        );
+                      },
+                    ),
                   ),
 
                       ],
-                    ),
-                    ),
-                    ),
+                    ))),
           ),
         ],
       ),

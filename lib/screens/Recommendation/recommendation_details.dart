@@ -1,7 +1,4 @@
 import 'dart:ffi';
-
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import '../../model/get_data_home.dart';
@@ -133,82 +130,7 @@ class DetailsRecommendationScreen extends StatelessWidget {
                       ),
                     ),
                     // Spacer between About text and new text field
-                    Text(
-                      'Date',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff000000),
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      Product.date.toString(),
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Color(0xff979595),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 2, // Adjust height of the divider
-                      width: 320, // Adjust width of the divider
-                      child: Divider(
-                        color: Color(0xff818181), // Adjust color of the divider
-                      ),
-                    ),
-                    // Spacer between About text and new text field
-                    Text(
-                      'Start Date',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff000000),
-                      ),
-                    ),
-                    SizedBox(height: 5),
-                    Text(
-                      Product.StartDate.toString(),
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Color(0xff979595),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 2, // Adjust height of the divider
-                      width: 320, // Adjust width of the divider
-                      child: Divider(
-                        color: Color(0xff818181), // Adjust color of the divider
-                      ),
-                    ),
-
-                    Text(
-                      'End Date',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff000000),
-                      ),
-                    ),
-                    SizedBox(height: 5),
-
-                    Text(
-                      Product.EndDate.toString(),
-                      style: TextStyle(
-                        fontSize: 18,
-                        color: Color(0xff979595),
-                      ),
-                    ),
-
-
-                    SizedBox(height: 5), // Spacer between text and divider
-                    SizedBox(
-                      height: 2, // Adjust height of the divider
-                      width: 320, // Adjust width of the divider
-                      child: Divider(
-                        color: Color(0xff818181), // Adjust color of the divider
-                      ),
-                    ),
-
+                    
                   ],
                 ),
               ),

@@ -1,20 +1,37 @@
 import 'dart:io';
+import 'dart:typed_data';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:image_picker/image_picker.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
 
 class AddData extends StatefulWidget {
-  const AddData({super.key});
+  const AddData({key});
 
   @override
   State<AddData> createState() => _AddDataState();
 }
 
 class _AddDataState extends State<AddData> {
+  TextEditingController plantNameControllar = TextEditingController();
+  TextEditingController plantScienteficControllar = TextEditingController();
+  TextEditingController plantDescriptionControllar = TextEditingController();
+  TextEditingController plantTypeControllar = TextEditingController();
+  TextEditingController plantPricingControllar = TextEditingController();
+  TextEditingController plantTemperetureControllar = TextEditingController();
+  TextEditingController plantWateringControllar = TextEditingController();
+  TextEditingController plantFretilizingControllar = TextEditingController();
+  TextEditingController plantHumidityControllar = TextEditingController();
+  // TextEditingController plantTemperatureControllar = TextEditingController();
   TextEditingController _dateController = TextEditingController();
-
   TextEditingController _startTimeController = TextEditingController();
   TextEditingController _endTimeController = TextEditingController();
+  List<Uint8List> _images = [];
+  final picker = ImagePicker();
+  List<String> _imageUrls = []; // to store download URLs of uploaded images
+
 
   Future<void> _selectDate(TextEditingController controller) async {
     try {
@@ -37,6 +54,7 @@ class _AddDataState extends State<AddData> {
     }
   }
 
+
   Future<void> _selectTime(TextEditingController controller) async {
     try {
       final TimeOfDay? picked = await showTimePicker(
@@ -55,24 +73,26 @@ class _AddDataState extends State<AddData> {
     } catch (e) {}
   }
 
+  String? _selectedValueOptaion;
   String? _selectedValue;
+  String? selectedValueLight;
+  String? selectedValueDifficulty;
+  String? selectedValueCleaning;
+  String? selectedValuePlace;
 
-  File? _image;
 
-  final picker = ImagePicker();
-
-  Future getImage() async {
-    // ignore: deprecated_member_use
-    final pickedFile = await picker.getImage(source: ImageSource.gallery);
-
-    setState(() {
-      if (pickedFile != null) {
-        _image = File(pickedFile.path);
-      } else {
-        print('No image selected.');
-      }
-    });
-  }
+  // Future getImage() async {
+  //   // ignore: deprecated_member_use
+  //   final pickedFile = await picker.getImage(source: ImageSource.gallery);
+  //
+  //   setState(() {
+  //     if (pickedFile != null) {
+  //       _image = File(pickedFile.path);
+  //     } else {
+  //       print('No image selected.');
+  //     }
+  //   });
+  // }
 
   String? groupValue = "yes";
   String? temperature = "now";
@@ -127,6 +147,7 @@ class _AddDataState extends State<AddData> {
                   color: Colors.white,
                 ),
                 child: TextFormField(
+                  controller: plantNameControllar,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -159,6 +180,7 @@ class _AddDataState extends State<AddData> {
                   color: Colors.white,
                 ),
                 child: TextFormField(
+                  controller: plantScienteficControllar,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -191,6 +213,7 @@ class _AddDataState extends State<AddData> {
                   color: Colors.white,
                 ),
                 child: TextFormField(
+                  controller: plantDescriptionControllar,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -223,6 +246,7 @@ class _AddDataState extends State<AddData> {
                   color: Colors.white,
                 ),
                 child: TextFormField(
+                  controller: plantTypeControllar,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -240,7 +264,7 @@ class _AddDataState extends State<AddData> {
                   left: 10,
                 ),
                 child: Text(
-                  'Tempreture',
+                  'Pricing',
                   style: TextStyle(
                     fontSize: 20,
                   ),
@@ -255,6 +279,8 @@ class _AddDataState extends State<AddData> {
                   color: Colors.white,
                 ),
                 child: TextFormField(
+                  controller: plantPricingControllar,
+                  keyboardType: TextInputType.number,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -282,20 +308,42 @@ class _AddDataState extends State<AddData> {
                 height: 5,
               ),
               Container(
-                margin: EdgeInsets.only(
-                  left: 20,
-                ),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 80,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.transparent,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.grey, width: 1),
                 ),
-                child: DropdownButton(
-                  hint: Text('Select an option'),
-                  value: _selectedValue,
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 10),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                              color: Colors.black,
+                              width: 0.15,
+                              style: BorderStyle.solid))),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w800),
+                  hint: _selectedValue == null
+                      ? Container(
+                      child: Text(
+                        "select color",
+                        textAlign: TextAlign.right,
+                        style: TextStyle(),
+                      ))
+                      : Container(
+                    child: Text(
+                      "${_selectedValue.toString()}",
+                      style: TextStyle(
+                        fontSize: 4,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  isExpanded: true,
                   items: <String>[
                     'Red',
                     'Yellow',
@@ -307,27 +355,23 @@ class _AddDataState extends State<AddData> {
                     'Blue',
                     'Purple',
                     'Multi Colors'
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
+                  ]
+                      .map(
+                        (value) => DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
-                    );
-                  }).toList(),
-                  icon: Icon(
-                    Icons.arrow_downward_rounded,
-                    size: 30,
-                  ),
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 18,
-                  ),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedValue = newValue;
-                    });
+                    ),
+                  )
+                      .toList(),
+                  borderRadius: BorderRadius.circular(10),
+                  menuMaxHeight: 260,
+                  onChanged: (valueSelcet) async {
+                    _selectedValue = valueSelcet;
+                    print(_selectedValue);
                   },
                 ),
               ),
+
               SizedBox(
                 height: 5,
               ),
@@ -347,62 +391,170 @@ class _AddDataState extends State<AddData> {
                 height: 5,
               ),
               Container(
-                margin: EdgeInsets.only(
-                  left: 20,
-                ),
-                padding: EdgeInsets.symmetric(
-                  horizontal: 80,
-                ),
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Colors.transparent,
                   borderRadius: BorderRadius.circular(10),
-                  border: Border.all(color: Colors.grey, width: 1),
                 ),
-                child: DropdownButton(
-                  hint: Text('Select an option'),
-                  value: _selectedValue,
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 10),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                              color: Colors.black,
+                              width: 0.15,
+                              style: BorderStyle.solid))),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w800),
+                  hint: _selectedValueOptaion == null
+                      ? Container(
+                      child: Text(
+                        'Select an option',
+                        textAlign: TextAlign.right,
+                        style: TextStyle(),
+                      ))
+                      : Container(
+                    child: Text(
+                      "${_selectedValueOptaion.toString()}",
+                      style: TextStyle(
+                        fontSize: 4,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  isExpanded: true,
                   items: <String>[
                     'grey',
                     'Dark green',
                     'Green',
-                    'variegated'
+                    'variegated',
                         'white',
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
+                  ]
+                      .map(
+                        (value) => DropdownMenuItem<String>(
                       value: value,
                       child: Text(value),
-                    );
-                  }).toList(),
-                  icon: Icon(
-                    Icons.arrow_downward_rounded,
-                    size: 30,
-                  ),
-                  style: TextStyle(
-                    color: Colors.red,
-                    fontSize: 18,
-                  ),
-                  onChanged: (String? newValue) {
-                    setState(() {
-                      _selectedValue = newValue;
-                    });
+                    ),
+                  )
+                      .toList(),
+                  borderRadius: BorderRadius.circular(10),
+                  menuMaxHeight: 260,
+                  onChanged: (valueSelcet) async {
+                    _selectedValueOptaion = valueSelcet;
+                    print(_selectedValueOptaion);
                   },
                 ),
               ),
-              if (_image != null) ...[
-                Image.file(_image!),
-                SizedBox(height: 20),
-              ],
-              SizedBox(
-                height: 5,
-              ),
-              Material(
-                color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    getImage();
-                  },
-                  child: Image(
-                    image: AssetImage('assets/Mask group44.png'),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Container(
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      width: 0.5,
+                      color: Colors.red,
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(15.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                         "صور المنتج ",
+                        style: TextStyle(
+                          fontSize: 12,
+                          color: Colors.grey,
+                        ),
+
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      const SizedBox(
+                        height: 10,
+                      ),
+                      _images.isEmpty
+                          ? const SizedBox()
+                          : SizedBox(
+                        height: 90,
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: _images.length,
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) {
+                            return Row(
+                              crossAxisAlignment:
+                              CrossAxisAlignment.start,
+                              children: [
+                                Image.memory(
+                                  _images[index],
+                                  height: 80,
+                                  width: 80,
+                                ),
+                                Container(
+                                  width: 20,
+                                  height: 20,
+                                  decoration: BoxDecoration(
+                                      color:
+                                      Colors.deepOrange,
+                                      borderRadius:
+                                      BorderRadius
+                                          .circular(50)),
+                                  child: Center(
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          _images.remove(
+                                              _images[index]);
+                                          _imageUrls.clear();
+                                        });
+                                      },
+                                      child: const Icon(
+                                          Icons.close,
+                                          size: 15),
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                      GestureDetector(
+                        onTap: () async {
+                          _imgFromGallery();
+                          await _uploadImages(); // call the function to upload images to Firebase Storage// call the function to upload images to Firebase Storage
+                        },
+                        child: Container(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 25,
+                              horizontal: 10,
+                            ),
+                            decoration: BoxDecoration(
+                              borderRadius:
+                              BorderRadius.circular(10),
+                            ),
+                            child: Column(
+                              children: [
+                                Center(
+                                  child: const Text(
+                                    'تحميل الصور',
+                                    style: TextStyle(
+                                      decoration:
+                                      TextDecoration.underline,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+
+                      )
+                    ],
                   ),
                 ),
               ),
@@ -430,6 +582,7 @@ class _AddDataState extends State<AddData> {
                       readOnly: true,
                       onTap: () {
                         _selectDate(_dateController);
+                        print(_dateController);
                       },
                     ),
                     SizedBox(height: 20),
@@ -450,6 +603,7 @@ class _AddDataState extends State<AddData> {
                             readOnly: true,
                             onTap: () {
                               _selectTime(_startTimeController);
+                              print(_startTimeController.text);
                             },
                           ),
                         ),
@@ -501,6 +655,7 @@ class _AddDataState extends State<AddData> {
                   color: Colors.white,
                 ),
                 child: TextFormField(
+                  controller: plantWateringControllar,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -533,6 +688,7 @@ class _AddDataState extends State<AddData> {
                   color: Colors.white,
                 ),
                 child: TextFormField(
+                  controller: plantFretilizingControllar,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -565,6 +721,7 @@ class _AddDataState extends State<AddData> {
                   color: Colors.white,
                 ),
                 child: TextFormField(
+                  controller: plantHumidityControllar,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -597,6 +754,7 @@ class _AddDataState extends State<AddData> {
                   color: Colors.white,
                 ),
                 child: TextFormField(
+                  controller: plantTemperetureControllar,
                   decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
@@ -614,46 +772,73 @@ class _AddDataState extends State<AddData> {
                   left: 10,
                 ),
                 child: Text(
-                  'Light neded to plant',
+                  'Light needed to plant',
                   style: TextStyle(
                     fontSize: 20,
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: Column(
-                  children: [
-                    RadioListTile(
-                        title: Text('Full sun'),
-                        value: " Full",
-                        groupValue: groupValue,
-                        onChanged: (Val) {
-                          setState(() {
-                            groupValue = Val;
-                          });
-                        }),
-                    RadioListTile(
-                        title: Text('Part sun'),
-                        value: "Part Sun",
-                        groupValue: groupValue,
-                        onChanged: (Val) {
-                          setState(() {
-                            groupValue = Val;
-                          });
-                        }),
-                    RadioListTile(
-                        title: Text('Part Shade'),
-                        value: "Part shade",
-                        groupValue: groupValue,
-                        onChanged: (Val) {
-                          setState(() {
-                            groupValue = Val;
-                          });
-                        }),
-                  ],
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 10),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                              color: Colors.black,
+                              width: 0.15,
+                              style: BorderStyle.solid))),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w800),
+                  hint: selectedValueLight == null
+                      ? Container(
+                      child: Text(
+                        "select Light",
+                        textAlign: TextAlign.right,
+                        style: TextStyle(),
+                      ))
+                      : Container(
+                    child: Text(
+                      "${selectedValueLight.toString()}",
+                      style: TextStyle(
+                        fontSize: 4,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  isExpanded: true,
+                  items: <String>[
+                    'Full sun',
+                    'Full sun, Part sun ,part shade',
+                    'Full sun, Part sun',
+                    'part sun , part shade',
+                    'part sun',
+                    'part shade',
+                  ]
+                      .map(
+                        (value) => DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    ),
+                  )
+                      .toList(),
+                  borderRadius: BorderRadius.circular(10),
+                  menuMaxHeight: 260,
+                  onChanged: (valueSelcet) async {
+                    selectedValueLight = valueSelcet;
+                    print(selectedValueLight);
+                  },
                 ),
               ),
+
               SizedBox(
                 height: 5,
               ),
@@ -669,38 +854,61 @@ class _AddDataState extends State<AddData> {
                   ),
                 ),
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: Column(
-                  children: [
-                    RadioListTile(
-                        title: Text('Easy'),
-                        value: "Easy",
-                        groupValue: temperature,
-                        onChanged: (Val) {
-                          setState(() {
-                            temperature = Val;
-                          });
-                        }),
-                    RadioListTile(
-                        title: Text('Medium'),
-                        value: "Medium",
-                        groupValue: temperature,
-                        onChanged: (Val) {
-                          setState(() {
-                            temperature = Val;
-                          });
-                        }),
-                    RadioListTile(
-                        title: Text('Hard'),
-                        value: "Hard ",
-                        groupValue: temperature,
-                        onChanged: (Val) {
-                          setState(() {
-                            temperature = Val;
-                          });
-                        }),
-                  ],
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 10),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                              color: Colors.black,
+                              width: 0.15,
+                              style: BorderStyle.solid))),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w800),
+                  hint: selectedValueDifficulty == null
+                      ? Container(
+                      child: Text(
+                        "select Difficulty",
+                        textAlign: TextAlign.right,
+                        style: TextStyle(),
+                      ))
+                      : Container(
+                    child: Text(
+                      "${selectedValueDifficulty.toString()}",
+                      style: TextStyle(
+                        fontSize: 4,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  isExpanded: true,
+                  items: <String>[
+                    'Easy',
+                    'Medium',
+                    'Hard'
+                  ]
+                      .map(
+                        (value) => DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    ),
+                  )
+                      .toList(),
+                  borderRadius: BorderRadius.circular(10),
+                  menuMaxHeight: 260,
+                  onChanged: (valueSelcet) async {
+                    selectedValueDifficulty = valueSelcet;
+                    print(selectedValueDifficulty);
+                  },
                 ),
               ),
               SizedBox(
@@ -718,51 +926,188 @@ class _AddDataState extends State<AddData> {
                   ),
                 ),
               ),
+              Container(
+                padding: EdgeInsets.symmetric(horizontal: 10),
+                decoration: BoxDecoration(
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 10),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                              color: Colors.black,
+                              width: 0.15,
+                              style: BorderStyle.solid))),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w800),
+                  hint: selectedValueCleaning == null
+                      ? Container(
+                      child: Text(
+                        "select Cleaning",
+                        textAlign: TextAlign.right,
+                        style: TextStyle(),
+                      ))
+                      : Container(
+                    child: Text(
+                      "${selectedValueCleaning.toString()}",
+                      style: TextStyle(
+                        fontSize: 4,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  isExpanded: true,
+                  items: <String>[
+                    'Not Needed',
+                    'leaves every three months ',
+                    'leaves every two months',
+                  ]
+                      .map(
+                        (value) => DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    ),
+                  )
+                      .toList(),
+                  borderRadius: BorderRadius.circular(10),
+                  menuMaxHeight: 260,
+                  onChanged: (valueSelcet) async {
+                    selectedValueCleaning = valueSelcet;
+                    print(selectedValueCleaning);
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ), SizedBox(
+                height: 5,
+              ),
               Padding(
-                padding: EdgeInsets.only(left: 15),
-                child: Column(
-                  children: [
-                    RadioListTile(
-                        title: Text('Not needed'),
-                        value: " not needed",
-                        groupValue: cleaning,
-                        onChanged: (Val) {
-                          setState(() {
-                            cleaning = Val;
-                          });
-                        }),
-                    RadioListTile(
-                        title: Text('leaves every third months'),
-                        value: " every 3 month",
-                        groupValue: cleaning,
-                        onChanged: (Val) {
-                          setState(() {
-                            cleaning = Val;
-                          });
-                        }),
-                    RadioListTile(
-                        title: Text('leaves every second month'),
-                        value: "every 2 month",
-                        groupValue: cleaning,
-                        onChanged: (Val) {
-                          setState(() {
-                            cleaning = Val;
-                          });
-                        }),
-                  ],
+                padding: EdgeInsets.only(
+                  top: 10,
+                  left: 10,
+                ),
+                child: Text(
+                  'Place',
+                  style: TextStyle(
+                    fontSize: 20,
+                  ),
                 ),
               ),
               Container(
-                height: 50,
-                width: 110,
+                padding: EdgeInsets.symmetric(horizontal: 10),
                 decoration: BoxDecoration(
-                    color: Color.fromARGB(255, 43, 165, 120),
-                    borderRadius: BorderRadius.circular(16)),
-                child: TextButton(
-                  onPressed: () {},
-                  child: Text(
-                    'Add data',
-                    style: TextStyle(color: Colors.white, fontSize: 17),
+                  color: Colors.transparent,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: DropdownButtonFormField<String>(
+                  decoration: InputDecoration(
+                      contentPadding: EdgeInsets.symmetric(
+                          vertical: 10, horizontal: 10),
+                      border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(10),
+                          borderSide: BorderSide(
+                              color: Colors.black,
+                              width: 0.15,
+                              style: BorderStyle.solid))),
+                  style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 12,
+                      fontWeight: FontWeight.w800),
+                  hint: selectedValuePlace == null
+                      ? Container(
+                      child: Text(
+                        "select Place",
+                        textAlign: TextAlign.right,
+                        style: TextStyle(),
+                      ))
+                      : Container(
+                    child: Text(
+                      "${selectedValuePlace.toString()}",
+                      style: TextStyle(
+                        fontSize: 4,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                  isExpanded: true,
+                  items: <String>[
+                   "Indoor",
+                   "Outdoor"
+                  ]
+                      .map(
+                        (value) => DropdownMenuItem<String>(
+                      value: value,
+                      child: Text(value),
+                    ),
+                  )
+                      .toList(),
+                  borderRadius: BorderRadius.circular(10),
+                  menuMaxHeight: 260,
+                  onChanged: (valueSelcet) async {
+                    selectedValuePlace = valueSelcet;
+                    print(selectedValuePlace);
+                  },
+                ),
+              ),
+              SizedBox(
+                height: 20,
+              ),
+              Center(
+                child: Container(
+                  height: 50,
+                  width: 110,
+                  decoration: BoxDecoration(
+                      color: Color.fromARGB(255, 43, 165, 120),
+                      borderRadius: BorderRadius.circular(16)),
+                  child: TextButton(
+                    onPressed: () async {
+                      await _uploadImages();
+                     FirebaseFirestore.instance.collection("category").add({
+                       "planetName":plantNameControllar.text,
+                       "planetScientefic":plantScienteficControllar.text,
+                       "planetDescriotion":plantDescriptionControllar.text,
+                       "planetType":plantTypeControllar.text,
+                       "plantPricing":plantPricingControllar.text,
+                       "FlowerColor":_selectedValue,
+                       "LeafColor":_selectedValueOptaion,
+                       'imageUrls': _imageUrls,
+                       'date': _dateController.text,
+                       'StartDate': _startTimeController.text,
+                       'EndDate': _endTimeController.text,
+                       'wateringFrequency': plantWateringControllar.text,
+                       'Fertilizing': plantFretilizingControllar.text,
+                       'humidity': plantHumidityControllar.text,
+                       'temperature': plantTemperetureControllar.text,
+                       'lightNeeded': selectedValueLight,
+                       'difficult': selectedValueDifficulty,
+                       'cleaning': selectedValueCleaning,
+                       'Place': selectedValuePlace,
+                       'isFavorite': false,
+                     }).then((value) {
+                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                         content: Text("Sending Data"),
+
+                       ));
+                        FirebaseFirestore.instance
+                           .collection("category")
+                           .doc(value.id)
+                           .update({
+                         "idPlants": value.id,
+                       });
+                        Navigator.pop(context);
+                     });
+                    },
+                    child: Text(
+                      'Add data',
+                      style: TextStyle(color: Colors.white, fontSize: 17),
+                    ),
                   ),
                 ),
               ),
@@ -773,4 +1118,40 @@ class _AddDataState extends State<AddData> {
       ),
     );
   }
+  void _imgFromGallery() async {
+    List<XFile>? files = await picker.pickMultiImage(
+      imageQuality: 50,
+    );
+
+    for (var element in files!) {
+      _images.add(await element.readAsBytes());
+    }
+
+    setState(() {});
+  }
+  Future<void> _uploadImages() async {
+    try {
+      for (var imageBytes in _images) {
+        // Generate a unique filename for each image (you may use UUID or any other unique identifier)
+        String filename = DateTime.now().millisecondsSinceEpoch.toString();
+
+        // Upload image to Firebase Storage
+        await firebase_storage.FirebaseStorage.instance
+            .ref('images/$filename.jpg')
+            .putData(imageBytes);
+
+        // Get the download URL of the uploaded image
+        String downloadURL = await firebase_storage.FirebaseStorage.instance
+            .ref('images/$filename.jpg')
+            .getDownloadURL();
+
+        // Save the download URL to the list
+        _imageUrls.add(downloadURL);
+      }
+    } catch (e) {
+      print('Error uploading images: $e');
+      // Handle error, show a snackbar or toast, etc.
+    }
+  }
+
 }
