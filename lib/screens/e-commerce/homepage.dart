@@ -1,11 +1,10 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_6/screens/Addpost.dart';
 import 'package:flutter_application_6/screens/adddata.dart';
 import 'package:flutter_application_6/screens/auth/login.dart';
-import 'package:flutter_application_6/screens/profilepicture.dart';
+import 'package:flutter_application_6/screens/diseases/diseases.dart';
 import 'package:flutter_application_6/widgets/background-color.dart';
 import 'package:flutter_application_6/widgets/image_slider.dart';
 
@@ -16,6 +15,8 @@ import '../../model/get_data_home.dart';
 import 'Plantscreen.dart';
 
 class HomePage extends StatefulWidget {
+   
+
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -23,11 +24,14 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   int _selectedIndex = 0;
   FirebaseAuth instance = FirebaseAuth.instance;
+  
 
   @override
   void initState() {
     super.initState();
     instance.authStateChanges().listen((User? user) {
+      
+
       // Changed to User?
       if (user == null) {
         Navigator.pushReplacement(
@@ -70,6 +74,7 @@ class _HomePageState extends State<HomePage> {
       await favoritesCollection.doc(product.planetName).delete();
     }
   }
+  
 
 
   @override
@@ -98,7 +103,7 @@ class _HomePageState extends State<HomePage> {
               );
             },
           ),
-        /*  IconButton(
+        /* IconButton(
               onPressed: () {
                 Navigator.push(
                   context,
@@ -127,75 +132,7 @@ class _HomePageState extends State<HomePage> {
         backgroundColor: Color(0xFF054D3B),
         child: ListView(
           children: <Widget>[
-            GestureDetector(
-              onTap: () {
-                //Navigate to another page when the ListTile is tapped
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => ProfilePicure()),
-                );
-                // Handle tap on Settings
-              },
-              child: ListTile(
-                leading: Icon(
-                  Icons.account_circle_outlined,
-                  color: Colors.white,
-                ),
-                title: Text('My Account',
-                    style: TextStyle(
-                      color: Colors.white,
-                    )),
-              ),
-            ),
-            GestureDetector(
-              onTap: () {
-                //Navigate to another page when the ListTile is tapped
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddPost()),
-                );
-                // Handle tap on Settings
-              },
-              child: ListTile(
-                leading: Icon(
-                  Icons.post_add,
-                  color: Colors.white,
-                ),
-                title: Text(
-                  'Post',
-                  style: TextStyle(
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            ),
-
-            ListTile(
-              leading: Icon(
-                Icons.people_alt,
-                color: Colors.white,
-              ),
-              title: Text('Community',
-                  style: TextStyle(
-                    color: Colors.white,
-                  )),
-              onTap: () {
-                // Handle tap on Settings
-              },
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.settings,
-                color: Colors.white,
-              ),
-              title: Text('Settings',
-                  style: TextStyle(
-                    color: Colors.white,
-                  )),
-              onTap: () {
-                // Handle tap on Settings
-              },
-            ),
+          
             GestureDetector(
               onTap: () {
                 instance.signOut();
@@ -517,7 +454,69 @@ class _HomePageState extends State<HomePage> {
                         SizedBox(
                           height: 10,
                         ),
-                        Container(
+                        Column(
+                          children: [
+                          
+                          Container(
+                                width: 380,
+                                height: 300,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(4)),
+                  ),
+                      width: 380,
+                      height: 240,
+                                      
+                                    
+          child: InkWell(
+            onTap: () {
+              print('Image tapped!');
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => DiseasesScreen()),
+              );
+            },
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
+              child: Image.asset(
+                'assets/Picture12.jpg',
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ),
+        // Add space between the image and text
+        
+                              
+                            
+                          ],
+                        )
+
+                          ),
+                                ],
+                    )],),),
+          ),
+          ),
+        ],
+      
+      ),
+
+      bottomNavigationBar: CustomBottomNavigationBar(
+        selectedIndex: _selectedIndex,
+        onItemTapped: _onItemTapped,
+      ),
+    );
+  }
+}
+
+  
+
+
+                    /*  Container(
                     height: 250,
                     width: double.infinity,
                     child: StreamBuilder<QuerySnapshot>(
@@ -562,10 +561,12 @@ class _HomePageState extends State<HomePage> {
                           itemCount: productsBySection.length,
                           itemBuilder: (BuildContext context, int index) {
                             var product = productsBySection[index];
-
+                          //  var imageUrl = (product.imageUrls!= null && product.imageUrls!.isNotEmpty)
+                          //   ? product.imageUrls![0]
+                          //   :'https://via.placeholder.com/200x200';
                             return GestureDetector(
                               onTap: () {
-
+                                
                               },
                               child: Container(
                                 width: 200,
@@ -581,17 +582,14 @@ class _HomePageState extends State<HomePage> {
                                       width: 200,
                                       height: 180,
                                       child: Image.network(
-                                        product.imageUrls![0],
+                                      product.imageUrls![0],
                                         fit: BoxFit.fill,
                                       ),
                                     ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                       children: [
-                                        Text(
-                                          product.diseaseName ?? 'No Name',
-                                          maxLines: 1,
-                                        ),
+                                      
                                       ],
                                     ),
                                   ],
@@ -603,18 +601,6 @@ class _HomePageState extends State<HomePage> {
                         );
                       },
                     ),
-                  ),
+                  ),*/
 
-                      ],
-                    ))),
-          ),
-        ],
-      ),
-
-      bottomNavigationBar: CustomBottomNavigationBar(
-        selectedIndex: _selectedIndex,
-        onItemTapped: _onItemTapped,
-      ),
-    );
-  }
-}
+              

@@ -3,8 +3,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_6/widgets/background-color.dart';
-import 'package:flutter_application_6/widgets/bottombar.dart';
-import 'package:flutter_application_6/widgets/outlinedbutton.dart';
+
 
 import 'RecommendedPlants.dart';
 
@@ -336,9 +335,8 @@ class _RecommendationState extends State<Recommendation> {
                       'white',
                       'orange',
                       'Violet',
-                      'Blue',
                       'Purple',
-                      'Multi Colors'
+                      
                     ]
                         .map(
                           (value) => DropdownMenuItem<String>(
@@ -373,9 +371,9 @@ class _RecommendationState extends State<Recommendation> {
                             // Fetch the data from Firestore
                             final querySnapshot = await FirebaseFirestore.instance
                                 .collection('category')
-                                .where('lightNeeded', isEqualTo: selectedValueLight)
+                                //.where('lightNeeded', isEqualTo: selectedValueLight)
                                 .where('Place', isEqualTo: selectedValuePlace)
-                                .where('difficult', isEqualTo: selectedValueDifficulty)
+                              //  .where('difficult', isEqualTo: selectedValueDifficulty)
                                 .where('FlowerColor', isEqualTo: selectedValueColor)
                                 .get();
 

@@ -6,8 +6,6 @@ import 'package:flutter/painting.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_application_6/screens/auth/login.dart';
-//import 'package:flutter_application_6/screens/homepage.dart';
-import 'package:flutter_application_6/screens/profilepicture.dart';
 import 'package:flutter_application_6/widgets/background-image.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -210,11 +208,3 @@ class _SignupPageState extends State<SignupPage> {
 //  }
 //}
 
-//Function to handle Google sign-in
-//void _signInWithGoogle() async {
-//  GoogleSignIn googleSignIn = GoogleSignIn();
-//  try {
-//  await googleSignIn.signIn();
-//    // Do something after sign-in, e.g., navigate to a new screen
-//  } catch (error) {
-//    print('Error signing in with Google: $error');

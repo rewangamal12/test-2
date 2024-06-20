@@ -4,7 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_6/screens/Addpost.dart';
 import 'package:flutter_application_6/screens/e-commerce/PlantScreen.dart';
-import 'package:flutter_application_6/screens/Plantdetails.dart';
+import 'package:flutter_application_6/screens/diseases/Plantdiseases.dart';
 import 'package:flutter_application_6/screens/indoorplants.dart';
 import 'package:flutter_application_6/screens/adddata.dart';
 import 'package:flutter_application_6/screens/auth/login.dart';
@@ -210,16 +210,7 @@ Widget buildImageContainer(BuildContext context, String imagePath,
           child: InkWell(
             onTap: () {
               print('Image tapped!');
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => PlantDetailScreen(
-                    title: title,
-                    description: description,
-                    imagePath: imagePath,
-                  ),
-                ),
-              );
+              
             },
             child: ClipRRect(
               borderRadius: BorderRadius.circular(30),

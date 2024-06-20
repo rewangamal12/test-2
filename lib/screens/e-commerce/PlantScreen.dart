@@ -89,27 +89,17 @@ class _PlantscreenState extends State<Plantscreen> {
                   children: [
                   
                     Row(
-                      children: [
-
-                    
-                  /*  Text(
-                      'Name Plants',
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Color(0xff000000),
-                      ),
-                    ),*/
-                    Text(
+                       children: [
+                      Text(
                       widget.Product.planetName.toString(),
                       style: TextStyle(
-                        fontSize: 23,
+                        fontSize: 20,
                         fontWeight: FontWeight.bold,
                         color: Color.fromARGB(255, 5, 77, 59),
                       ),
                     ),
                     IconButton(
-                      alignment: Alignment.topRight,
+
                           icon: Icon(
                             widget.Product.isFavorite == true ? Icons.favorite : Icons.favorite_border,
                             color: widget.Product.isFavorite == true ? Colors.red : Colors.grey,
@@ -257,15 +247,8 @@ class _PlantscreenState extends State<Plantscreen> {
                         color: Color(0xff818181), // Adjust color of the divider
                       ),
                     ),
-                      SizedBox(height: 5), // Spacer between text and divider
-                    SizedBox(
-                      height: 2, // Adjust height of the divider
-                      width: 320, // Adjust width of the divider
-                      child: Divider(
-                        color: Color(0xff818181), // Adjust color of the divider
-                      ),
-                    ),
-                    Text('Fertilizing',
+                    
+                    Text('Cleaning',
                     style: TextStyle(fontSize: 20,
                     color: Colors.black,
                     fontWeight: FontWeight.bold ),),
@@ -276,6 +259,13 @@ class _PlantscreenState extends State<Plantscreen> {
                       style: TextStyle(
                         fontSize: 18,
                         color:Color(0xff818181),
+                      ),
+                    ),
+                      SizedBox(
+                      height: 2, // Adjust height of the divider
+                      width: 320, // Adjust width of the divider
+                      child: Divider(
+                        color: Color(0xff818181), // Adjust color of the divider
                       ),
                     ),
                     SizedBox(height: 5),
@@ -311,6 +301,13 @@ class _PlantscreenState extends State<Plantscreen> {
                       style: TextStyle(
                         fontSize: 18,
                         color:Color(0xff818181),
+                      ),
+                    ),
+                      SizedBox(
+                      height: 2, // Adjust height of the divider
+                      width: 320, // Adjust width of the divider
+                      child: Divider(
+                        color: Color(0xff818181), // Adjust color of the divider
                       ),
                     ),
                     SizedBox(height: 20,),

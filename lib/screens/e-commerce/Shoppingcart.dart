@@ -21,6 +21,16 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
     if (user == null) {
       return Scaffold(
         appBar: AppBar(
+          leading: IconButton(
+          icon: Icon(Icons.arrow_back,
+            size: 40,
+            color:Color.fromARGB(255, 5, 77, 59),
+            weight: 300,),
+          onPressed: () {
+
+            Navigator.pop(context);
+          },
+        ),
           title: Center(
             child: Text(
               'Shopping Cart',
@@ -180,6 +190,7 @@ class _ShoppingCartPageState extends State<ShoppingCartPage> {
             ),
 
             bottomNavigationBar: BottomAppBar(
+            
               child: Row(
                 children: [
                   Padding(

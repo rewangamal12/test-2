@@ -306,9 +306,9 @@ class disease {
     }
 
     return disease(
-      imageUrls: extractImageUrls(json['imageUrl']),
-      diseaseName: json['diseaseName'] ?? " ",
-      description: json['description'] ?? " ",
+      imageUrls: extractImageUrls(json['imageUrls']),
+      diseaseName: json['diseaseName'] ?? "",
+      description: json['description'] ?? "",
 
     );
   }
